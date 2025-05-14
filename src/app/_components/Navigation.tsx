@@ -38,9 +38,8 @@ export default function Navigation({ links }: NavigationProps) {
           : "bg-base-100 top-5 right-5 left-5 mx-auto w-auto rounded-2xl shadow-none md:w-4/5"
       }`}
     >
-      {" "}
-      {/* Links Left */}
-      <div className="navbar-start">
+      {/* Left Section - Links */}
+      <div className="flex flex-1 items-center">
         {/* Mobile Dropdown */}
         <div className="dropdown lg:hidden">
           <button tabIndex={0} className="btn btn-ghost text-white">
@@ -86,14 +85,14 @@ export default function Navigation({ links }: NavigationProps) {
           </ul>
         </div>
 
-        {/* Desktop Menu */}
-        <ul className="menu menu-horizontal hidden items-center gap-4 px-1 text-white uppercase lg:flex">
+        {/* Desktop Links */}
+        <ul className="menu menu-horizontal hidden gap-4 px-1 text-white uppercase lg:flex">
           {links.map((link) =>
             link.children ? (
               <li key={link.name}>
                 <details>
                   <summary>{link.name}</summary>
-                  <ul className="bg-base-100 p- w-48">
+                  <ul className="bg-base-100 w-48 p-2">
                     {link.children.map((child) => (
                       <li key={child.name}>
                         <Link href={child.url}>{child.name}</Link>
@@ -110,20 +109,24 @@ export default function Navigation({ links }: NavigationProps) {
           )}
         </ul>
       </div>
-      {/* Brand Centered */}
-      <div className="navbar-center">
+
+      {/* Center Section - Brand */}
+      <div className="flex-none">
         <Link href="/" className="text-xl font-bold text-white md:text-3xl">
           AMIRACLE&apos;CO.
         </Link>
       </div>
-      {/* CTA Button Right */}
-      <div className="navbar-end">
-        <Link
-          href="/contact"
-          className="btn btn-outline px-3 py-1 text-sm text-white uppercase hover:text-purple-400 md:px-5 md:py-2 md:text-base"
-        >
-          Visit Store
-        </Link>
+
+      {/* Right Section - Button (hidden on mobile) */}
+      <div className="flex flex-1 justify-end">
+        <div className="hidden md:block">
+          <Link
+            href="/contact"
+            className="btn btn-outline px-5 py-2 text-base text-white uppercase hover:text-purple-400"
+          >
+            Visit Store
+          </Link>
+        </div>
       </div>
     </nav>
   );
