@@ -34,8 +34,8 @@ export default function Navigation({ links }: NavigationProps) {
     <nav
       className={`fixed z-50 flex h-16 items-center justify-between px-5 shadow-xl backdrop-blur-3xl transition-all duration-200 ease-in-out ${
         scrolled
-          ? "bg-base-100 top-0 w-full rounded-none shadow-md"
-          : "bg-base-100 top-5 right-5 left-5 mx-auto w-auto rounded-2xl shadow-none md:w-4/5"
+          ? "bg-base-300 top-0 w-full rounded-none shadow-md"
+          : "bg-base-300 top-5 right-5 left-5 mx-auto w-auto rounded-2xl shadow-none md:w-4/5"
       }`}
     >
       {/* Left Section - Links */}
