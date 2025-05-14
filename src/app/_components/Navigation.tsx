@@ -120,7 +120,7 @@ export default function Navigation({ links }: NavigationProps) {
       <div className="navbar-end">
         <Link
           href="/contact"
-          className="btn btn-outline text-white uppercase hover:text-purple-400"
+          className="btn btn-outline px-3 py-1 text-sm text-white uppercase hover:text-purple-400 md:px-5 md:py-2 md:text-base"
         >
           Visit Store
         </Link>
