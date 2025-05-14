@@ -45,7 +45,7 @@ export default function Home() {
               />
               <h3 className="text-lg font-semibold">{flavor.name}</h3>
 
-              <Link href="/" className="btn btn-outline">
+              <Link href="/" className="btn btn-outline mt-3">
                 <span>Learn More</span>
               </Link>
             </div>
