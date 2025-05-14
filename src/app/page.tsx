@@ -1,37 +1,57 @@
 import Link from "next/link";
+import Image from "next/image";
 
-export default function HomePage() {
+export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
+    <>
+      <header className="relative top-0 flex min-h-screen flex-col-reverse items-center justify-center gap-12 overflow-hidden px-6 py-16 md:flex-row md:px-20 lg:px-32 xl:px-48">
+        <div className="text-center md:w-1/2 md:text-left">
+          <h1 className="mb-6 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            Discover the Power of Sea Moss
+          </h1>
+          <p className="mb-8 max-w-md text-lg text-gray-300">
+            Nourish your body with nature’s superfood — shop juices, gels, and
+            capsules crafted for your health and lifestyle.
+          </p>
+
+          <button className="btn-outline btn-lg btn">
+            <Link href="/products">Shop Now</Link>
+          </button>
+        </div>{" "}
+      </header>
+      <section className="px-6 py-16 text-white md:px-20 lg:px-32 xl:px-48">
+        <h2 className="mb-12 text-center text-3xl font-bold sm:text-4xl">
+          Explore Our Flavors
+        </h2>
+
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {[
+            { name: "Natureurade", image: "/images/mango.png" },
+            { name: "Strawberry Lemonade", image: "/images/berry.png" },
+            { name: "Blueberry Lemonade", image: "/images/citrus.png" },
+            { name: "Passion Fruit Lemonade", image: "/images/pineapple.png" },
+            { name: "Guava Lemonade", image: "/images/mint-lime.png" },
+          ].map((flavor, idx) => (
+            <div
+              key={idx}
+              className="rounded-2xl bg-white/5 p-6 text-center shadow-lg backdrop-blur transition hover:scale-105"
+            >
+              <Image
+                src={flavor.image}
+                alt={flavor.name}
+                width={96}
+                height={96}
+                className="mx-auto mb-4 h-24 w-24 object-contain"
+              />
+              <h3 className="text-lg font-semibold">{flavor.name}</h3>
+
+              <Link href="/" className="btn btn-outline">
+                <span>Learn More</span>
+              </Link>
             </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+          ))}
         </div>
-      </div>
-    </main>
+      </section>
+    </>
   );
 }
