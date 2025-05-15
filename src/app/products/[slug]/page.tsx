@@ -106,11 +106,11 @@ export default async function ProductPage(props: PageProps) {
           <h2 className="mb-8 text-center text-2xl font-bold">
             Related Products
           </h2>
-          <div className="flex flex-row flex-wrap justify-evenly gap-10">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
             {relatedProducts.map((relatedProduct) => (
               <div
                 key={relatedProduct.slug}
-                className="w-full max-w-xs rounded-2xl bg-white/5 p-6 text-center shadow-lg backdrop-blur transition hover:scale-105 sm:w-1/2 md:w-1/3 lg:w-1/4"
+                className="rounded-2xl bg-white/5 p-6 text-center shadow-lg backdrop-blur transition hover:scale-105"
               >
                 <Image
                   src={relatedProduct.imageUrl}
