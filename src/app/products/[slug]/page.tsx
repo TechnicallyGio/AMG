@@ -38,6 +38,22 @@ export default async function ProductPage({ params }: PageProps) {
               className="h-96 w-96 object-contain"
               priority
             />
+            <Image
+              src="https://placehold.co/1000x1000?text=Placeholder+2"
+              alt={product.name}
+              width={400}
+              height={400}
+              className="h-96 w-96 object-contain"
+              priority
+            />
+            <Image
+              src="https://placehold.co/1000x1000?text=Placeholder+3"
+              alt={product.name}
+              width={400}
+              height={400}
+              className="h-96 w-96 object-contain"
+              priority
+            />
           </div>
         </div>
 
