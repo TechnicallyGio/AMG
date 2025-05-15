@@ -1,13 +1,7 @@
-// src/app/products/[slug]/page.tsx
 import products from "../../products";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-
-type ProductPageProps = {
-  params: { slug: string };
-  searchParams: Record<string, string | string[] | undefined>; // Optional, but good practice
-};
 
 export async function generateStaticParams() {
   return products.map((product) => ({
@@ -15,7 +9,11 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ProductPage({ params }: ProductPageProps) {
+export default async function ProductPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const { slug } = params;
   const product = products.find((p) => p.slug === slug);
 
