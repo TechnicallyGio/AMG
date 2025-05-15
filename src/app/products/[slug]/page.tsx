@@ -2,7 +2,12 @@ import products from "../../products";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+type PageProps<T = object> = {
+  params?: T;
+  searchParams?: Record<string, string | string[] | undefined>;
+};
 
+// Generate static params for each product slug
 export async function generateStaticParams() {
   return products.map((product) => ({
     slug: product.slug,
@@ -11,18 +16,21 @@ export async function generateStaticParams() {
 
 export default async function ProductPage({
   params,
-}: {
-  params: { slug: string };
-}) {
-  const { slug } = params;
+}: PageProps<{ slug: string }>) {
+  const { slug } = (params ?? {}) as { slug?: string };
+  if (typeof slug !== "string") return notFound();
   const product = products.find((p) => p.slug === slug);
 
   if (!product) return notFound();
 
+  const relatedProducts = products.filter(
+    (p) => p.category === product.category && p.slug !== slug,
+  );
+
   return (
     <div className="flex flex-col items-center justify-center px-6 py-16 text-white md:px-20 lg:px-32 xl:px-48">
       <div className="flex w-full flex-col gap-8 md:flex-row">
-        {/* Left Side - Scrolls normally with page */}
+        {/* Left Side */}
         <div className="w-full md:w-1/2">
           <div className="flex flex-col items-center space-y-6">
             {[...Array(3)].map((_, i) => (
@@ -38,7 +46,7 @@ export default async function ProductPage({
           </div>
         </div>
 
-        {/* Right Side - Sticky until bottom */}
+        {/* Right Side - Sticky */}
         <div className="w-full md:w-1/2">
           <div className="sticky top-24">
             <div className="flex flex-col items-start justify-start rounded-xl bg-black/30 p-6 shadow-lg backdrop-blur">
@@ -69,43 +77,33 @@ export default async function ProductPage({
       </div>
 
       {/* Related Products Section */}
-      {products.filter(
-        (p) => p.category === product.category && p.slug !== product.slug,
-      ).length > 0 && (
+      {relatedProducts.length > 0 && (
         <div className="mt-16 flex w-full flex-col items-center">
           <h2 className="mb-8 text-center text-2xl font-bold">
             Related Products
           </h2>
           <div className="flex flex-row flex-wrap justify-evenly gap-10">
-            {products
-              .filter(
-                (p) =>
-                  p.category === product.category && p.slug !== product.slug,
-              )
-              .map((relatedProduct, idx) => (
-                <div
-                  key={idx}
-                  className="w-1/5 rounded-2xl bg-white/5 p-6 text-center shadow-lg backdrop-blur transition hover:scale-105"
+            {relatedProducts.map((relatedProduct) => (
+              <div
+                key={relatedProduct.slug}
+                className="w-1/5 min-w-[160px] rounded-2xl bg-white/5 p-6 text-center shadow-lg backdrop-blur transition hover:scale-105"
+              >
+                <Image
+                  src={relatedProduct.imageUrl}
+                  alt={relatedProduct.name}
+                  width={96}
+                  height={96}
+                  className="mx-auto mb-4 h-24 w-24 object-contain"
+                />
+                <h3 className="text-lg font-semibold">{relatedProduct.name}</h3>
+                <Link
+                  href={`/products/${relatedProduct.slug}`}
+                  className="btn btn-outline mt-5 inline-block"
                 >
-                  <Image
-                    src={relatedProduct.imageUrl}
-                    alt={relatedProduct.name}
-                    width={96}
-                    height={96}
-                    className="mx-auto mb-4 h-24 w-24 object-contain"
-                  />
-                  <h3 className="text-lg font-semibold">
-                    {relatedProduct.name}
-                  </h3>
-                  <Link
-                    key={relatedProduct.id}
-                    href={`/products/${relatedProduct.slug}`}
-                    className="btn btn-outline mt-5"
-                  >
-                    Learn More
-                  </Link>
-                </div>
-              ))}
+                  Learn More
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       )}
