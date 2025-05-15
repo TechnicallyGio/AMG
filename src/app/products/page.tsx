@@ -54,11 +54,11 @@ export default function ProductsPage() {
       </div>
 
       {/* Product Grid */}
-      <div className="flex flex-wrap justify-center gap-8">
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {filteredProducts.map((product) => (
           <div
             key={product.id}
-            className="flex h-[320px] w-1/4 min-w-[200px] flex-col justify-between rounded-2xl bg-white/5 p-6 text-center shadow-lg backdrop-blur transition hover:scale-105"
+            className="flex h-80 flex-col justify-between rounded-2xl bg-white/5 p-6 text-center shadow-lg backdrop-blur transition hover:scale-105"
           >
             <div className="flex flex-col items-center">
               <Image
