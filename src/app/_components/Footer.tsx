@@ -1,6 +1,8 @@
 "use client";
+
 import Link from "next/link";
 import { Icon } from "@iconify/react";
+import { motion } from "framer-motion";
 
 type SocialLink = {
   icon: string;
@@ -10,9 +12,26 @@ type SocialLink = {
 
 export default function Footer() {
   return (
-    <footer className="bg-black px-6 py-10 text-white shadow-2xl backdrop-blur-3xl">
+    <motion.footer
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+      className="bg-black px-6 py-10 text-white shadow-2xl backdrop-blur-3xl"
+    >
       {/* Top Row: 4 Columns */}
-      <div className="mb-8 flex flex-wrap justify-between gap-y-8">
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        variants={{
+          hidden: {},
+          show: {
+            transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+          },
+        }}
+        className="mb-8 flex flex-wrap justify-between gap-y-8"
+      >
         <FooterBrandColumn
           title="AMILAGROS BRAND"
           description={`AMILAGROS'CO is a brand that embodies the spirit of resilience and strength. Our products are designed to empower individuals to embrace their true selves and live life to the fullest.`}
@@ -38,10 +57,15 @@ export default function Footer() {
         />
 
         <FooterColumn title="Company" links={["About Us", "Our Story"]} />
-      </div>
+      </motion.div>
 
       {/* Bottom Row */}
-      <div className="flex flex-col items-center justify-between border-t border-gray-700 pt-6 text-sm md:flex-row">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        className="flex flex-col items-center justify-between border-t border-gray-700 pt-6 text-sm md:flex-row"
+      >
         <div className="mb-4 md:mb-0">
           &copy; {new Date().getFullYear()} AMILAGROS&apos;CO. All rights
           reserved.
@@ -51,15 +75,21 @@ export default function Footer() {
           <FooterLink href="/privacy">Privacy Policy</FooterLink>
           <FooterLink href="/refunds">Refunds</FooterLink>
         </div>
-      </div>
-    </footer>
+      </motion.div>
+    </motion.footer>
   );
 }
 
 // Reusable Components
 function FooterColumn({ title, links }: { title: string; links: string[] }) {
   return (
-    <div className="min-w-[150px]">
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+      }}
+      className="min-w-[150px]"
+    >
       <h4 className="mb-4 text-lg font-semibold">{title}</h4>
       <ul className="space-y-2 text-sm">
         {links.map((text, idx) => (
@@ -70,7 +100,7 @@ function FooterColumn({ title, links }: { title: string; links: string[] }) {
           </li>
         ))}
       </ul>
-    </div>
+    </motion.div>
   );
 }
 
@@ -84,7 +114,13 @@ export function FooterBrandColumn({
   socialLinks: SocialLink[];
 }) {
   return (
-    <div className="max-w-xs min-w-[200px]">
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+      }}
+      className="max-w-xs min-w-[200px]"
+    >
       <h4 className="mb-4 text-lg font-semibold">{title}</h4>
       <p className="mb-4 text-sm leading-relaxed text-gray-300">
         {description}
@@ -105,7 +141,7 @@ export function FooterBrandColumn({
           </li>
         ))}
       </ul>
-    </div>
+    </motion.div>
   );
 }
 
