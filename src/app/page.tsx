@@ -1,7 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 
+import products from "./products";
+
 export default function Home() {
+  const juiceProducts = products.filter(
+    (product) => product.featured === true && product.category === "beverage",
+  );
+
   return (
     <>
       <header className="relative top-0 flex min-h-screen flex-col-reverse items-center justify-center gap-12 overflow-hidden px-6 py-16 md:flex-row md:px-20 lg:px-32 xl:px-48">
@@ -25,25 +31,19 @@ export default function Home() {
         </h2>
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {[
-            { name: "Natureurade", image: "/images/mango.png" },
-            { name: "Strawberry Lemonade", image: "/images/berry.png" },
-            { name: "Blueberry Lemonade", image: "/images/citrus.png" },
-            { name: "Passion Fruit Lemonade", image: "/images/pineapple.png" },
-            { name: "Guava Lemonade", image: "/images/mint-lime.png" },
-          ].map((flavor, idx) => (
+          {juiceProducts.map((product, idx) => (
             <div
               key={idx}
               className="rounded-2xl bg-white/5 p-6 text-center shadow-lg backdrop-blur transition hover:scale-105"
             >
               <Image
-                src={flavor.image}
-                alt={flavor.name}
+                src={product.imageUrl}
+                alt={product.name}
                 width={96}
                 height={96}
                 className="mx-auto mb-4 h-24 w-24 object-contain"
               />
-              <h3 className="text-lg font-semibold">{flavor.name}</h3>
+              <h3 className="text-lg font-semibold">{product.name}</h3>
 
               <Link href="/" className="btn btn-outline mt-3">
                 <span>Learn More</span>

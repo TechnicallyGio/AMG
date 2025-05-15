@@ -4,6 +4,7 @@ import { Geist } from "next/font/google";
 import type { Metadata } from "next";
 import Navigation from "./_components/Navigation";
 import Footer from "./_components/Footer";
+import { TRPCReactProvider } from "~/trpc/react";
 
 // Font configuration
 const geist = Geist({
@@ -25,14 +26,7 @@ export default function RootLayout({
   const headerLinks = [
     { name: "Home", url: "/" },
     { name: "About", url: "/about" },
-    {
-      name: "Products",
-      url: "/products",
-      children: [
-        { name: "Sea Moss Gel", url: "/products/gel" },
-        { name: "Juices", url: "/products/juice" },
-      ],
-    },
+    { name: "Shop", url: "/products" },
     { name: "Contact", url: "/contact" },
   ];
 
@@ -43,7 +37,9 @@ export default function RootLayout({
         <Navigation links={headerLinks} />
 
         {/* Main content area */}
-        <main className="flex-grow pt-24">{children}</main>
+        <TRPCReactProvider>
+          <main className="flex-grow pt-24">{children}</main>
+        </TRPCReactProvider>
 
         {/* Footer */}
         <Footer />
