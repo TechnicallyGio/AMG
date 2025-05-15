@@ -10,7 +10,7 @@ type SocialLink = {
 
 export default function Footer() {
   return (
-    <footer className="bg-black px-6 py-10 text-white">
+    <footer className="bg-black px-6 py-10 text-white shadow-2xl backdrop-blur-3xl">
       {/* Top Row: 4 Columns */}
       <div className="mb-8 flex flex-wrap justify-between gap-y-8">
         <FooterBrandColumn

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface NavigationProps {
   links: Array<{
@@ -18,28 +19,30 @@ export default function Navigation({ links }: NavigationProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    // Check initial scroll position on mount
     if (window.scrollY > 0) {
       setScrolled(true);
     }
 
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <nav
-      className={`fixed z-50 flex h-16 items-center justify-between px-5 shadow-xl backdrop-blur-3xl transition-all duration-200 ease-in-out ${
+    <motion.nav
+      initial={{ opacity: 0, y: -20 }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        top: scrolled ? 0 : 20,
+        left: scrolled ? 0 : "5%",
+        right: scrolled ? 0 : "5%",
+        width: scrolled ? "100%" : "90%",
+      }}
+      className={`fixed z-50 flex h-16 items-center justify-between px-5 backdrop-blur-3xl transition-all duration-300 ${
         scrolled
           ? "bg-base-300 top-0 w-full rounded-none shadow-md"
           : "bg-base-300 top-5 right-5 left-5 mx-auto w-auto rounded-2xl shadow-none md:w-4/5"
@@ -93,7 +96,12 @@ export default function Navigation({ links }: NavigationProps) {
         </div>
 
         {/* Desktop Links */}
-        <ul className="menu menu-horizontal hidden gap-4 px-1 text-white uppercase lg:flex">
+        <motion.ul
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="menu menu-horizontal hidden gap-4 px-1 text-white uppercase lg:flex"
+        >
           {links.map((link) =>
             link.children ? (
               <li key={link.name}>
@@ -114,18 +122,28 @@ export default function Navigation({ links }: NavigationProps) {
               </li>
             ),
           )}
-        </ul>
+        </motion.ul>
       </div>
 
       {/* Center Section - Brand */}
-      <div className="flex-none">
+      <motion.div
+        initial={{ scale: 0.95 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.3 }}
+        className="flex-none"
+      >
         <Link href="/" className="text-xl font-bold text-white md:text-3xl">
           AMIRACLE&apos;CO.
         </Link>
-      </div>
+      </motion.div>
 
-      {/* Right Section - Button (hidden on mobile) */}
-      <div className="flex flex-1 justify-end">
+      {/* Right Section - Button */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="flex flex-1 justify-end"
+      >
         <div className="hidden md:block">
           <Link
             href="/contact"
@@ -134,7 +152,7 @@ export default function Navigation({ links }: NavigationProps) {
             Visit Store
           </Link>
         </div>
-      </div>
-    </nav>
+      </motion.div>
+    </motion.nav>
   );
 }
