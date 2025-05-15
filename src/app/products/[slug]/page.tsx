@@ -2,25 +2,22 @@ import products from "../../products";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-type PageProps<T = object> = {
-  params?: T;
-  searchParams?: Record<string, string | string[] | undefined>;
+
+type PageProps = {
+  params: { slug: string };
 };
 
-// Generate static params for each product slug
+// Static path generation for product slugs
 export async function generateStaticParams() {
   return products.map((product) => ({
     slug: product.slug,
   }));
 }
 
-export default async function ProductPage({
-  params,
-}: PageProps<{ slug: string }>) {
-  const { slug } = (params ?? {}) as { slug?: string };
-  if (typeof slug !== "string") return notFound();
-  const product = products.find((p) => p.slug === slug);
+export default async function ProductPage({ params }: PageProps) {
+  const { slug } = params;
 
+  const product = products.find((p) => p.slug === slug);
   if (!product) return notFound();
 
   const relatedProducts = products.filter(
@@ -30,23 +27,21 @@ export default async function ProductPage({
   return (
     <div className="flex flex-col items-center justify-center px-6 py-16 text-white md:px-20 lg:px-32 xl:px-48">
       <div className="flex w-full flex-col gap-8 md:flex-row">
-        {/* Left Side */}
+        {/* Left - Product Image */}
         <div className="w-full md:w-1/2">
           <div className="flex flex-col items-center space-y-6">
-            {[...Array(3)].map((_, i) => (
-              <Image
-                key={i}
-                src={product.imageUrl}
-                alt={`${product.name} image ${i + 1}`}
-                width={400}
-                height={400}
-                className="h-96 w-96 object-contain"
-              />
-            ))}
+            <Image
+              src={product.imageUrl}
+              alt={product.name}
+              width={400}
+              height={400}
+              className="h-96 w-96 object-contain"
+              priority
+            />
           </div>
         </div>
 
-        {/* Right Side - Sticky */}
+        {/* Right - Sticky Product Info */}
         <div className="w-full md:w-1/2">
           <div className="sticky top-24">
             <div className="flex flex-col items-start justify-start rounded-xl bg-black/30 p-6 shadow-lg backdrop-blur">
@@ -56,7 +51,7 @@ export default async function ProductPage({
                 href={product.amazonLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-outline mt-5"
+                className="mt-5 inline-block rounded-md border border-white px-4 py-2 text-white transition hover:bg-white hover:text-black"
               >
                 Buy on Amazon
               </a>
@@ -76,7 +71,7 @@ export default async function ProductPage({
         </div>
       </div>
 
-      {/* Related Products Section */}
+      {/* Related Products */}
       {relatedProducts.length > 0 && (
         <div className="mt-16 flex w-full flex-col items-center">
           <h2 className="mb-8 text-center text-2xl font-bold">
@@ -98,7 +93,7 @@ export default async function ProductPage({
                 <h3 className="text-lg font-semibold">{relatedProduct.name}</h3>
                 <Link
                   href={`/products/${relatedProduct.slug}`}
-                  className="btn btn-outline mt-5 inline-block"
+                  className="mt-4 inline-block rounded-md border border-white px-3 py-1 text-sm transition hover:bg-white hover:text-black"
                 >
                   Learn More
                 </Link>
