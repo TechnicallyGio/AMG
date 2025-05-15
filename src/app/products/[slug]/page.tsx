@@ -1,4 +1,3 @@
-// src/app/products/[slug]/page.tsx
 import products from "../../products";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -14,15 +13,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
-  const product = products.find((p) => p.slug === params.slug);
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { slug } = params;
+  const product = products.find((p) => p.slug === slug);
 
   if (!product) return notFound();
 
   return (
-    // On the left, there will be 3 images of the product
-    // On the right, there will be the name of the product, description, and a button to amazon. there will be a divider and below the divider there will be characteristics of the product.
-    // the right side will be fixed and the left side will be scrollable
     <div className="flex flex-col items-center justify-center px-6 py-16 text-white md:px-20 lg:px-32 xl:px-48">
       <div className="flex w-full flex-col gap-8 md:flex-row">
         {/* Left Side - Scrolls normally with page */}
@@ -100,7 +97,6 @@ export default function ProductPage({ params }: ProductPageProps) {
                   <h3 className="text-lg font-semibold">
                     {relatedProduct.name}
                   </h3>
-
                   <Link
                     key={relatedProduct.id}
                     href={`/products/${relatedProduct.slug}`}
