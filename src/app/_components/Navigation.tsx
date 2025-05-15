@@ -33,7 +33,7 @@ export default function Navigation({ links }: NavigationProps) {
 
   return (
     <motion.nav
-      initial={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0, top: -50, left: "5%", right: "5%", width: "90%" }}
       animate={{
         opacity: 1,
         y: 0,
@@ -41,10 +41,19 @@ export default function Navigation({ links }: NavigationProps) {
         left: scrolled ? 0 : "5%",
         right: scrolled ? 0 : "5%",
         width: scrolled ? "100%" : "90%",
+        borderRadius: scrolled ? "0rem" : "1rem",
+
+        boxShadow: scrolled
+          ? "0 4px 20px rgba(0, 0, 0, 0.2)"
+          : "0 0px 0px rgba(0, 0, 0, 0)",
       }}
-      className={`fixed z-50 flex h-16 items-center justify-between px-5 backdrop-blur-3xl transition-all duration-300 ${
+      transition={{
+        duration: 0.5, // Smooth transition for high refresh displays
+        ease: [0.4, 0, 0.2, 1], // Equivalent to CSS ease-in-out
+      }}
+      className={`fixed z-50 flex h-16 items-center justify-between px-5 ${
         scrolled
-          ? "bg-base-300 top-0 w-full rounded-none shadow-md"
+          ? "bg-base-300 top-0 w-full rounded-none shadow-2xl backdrop-blur-3xl"
           : "bg-base-300 top-5 right-5 left-5 mx-auto w-auto rounded-2xl shadow-none md:w-4/5"
       }`}
     >
