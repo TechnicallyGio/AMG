@@ -38,7 +38,7 @@ export default async function ProductPage(props: PageProps) {
   ) as Product[];
 
   return (
-    <div className="flex flex-col items-center justify-center px-6 py-16 text-white md:px-20 lg:px-32 xl:px-48">
+    <div className="flex flex-col items-center justify-center px-6 py-16 text-white md:px-20 lg:px-32 xl:px-45">
       <div className="flex w-full flex-col gap-8 md:flex-row">
         {/* Left - Product Image */}
         <div className="w-full md:w-1/2">
