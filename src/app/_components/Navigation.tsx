@@ -16,14 +16,21 @@ interface NavigationProps {
 
 export default function Navigation({ links }: NavigationProps) {
   const [scrolled, setScrolled] = useState(false);
-  const handleScroll = () => {
+
+  useEffect(() => {
+    // Check initial scroll position on mount
     if (window.scrollY > 0) {
       setScrolled(true);
-    } else {
-      setScrolled(false);
     }
-  };
-  useEffect(() => {
+
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);

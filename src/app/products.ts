@@ -11,6 +11,8 @@ interface Product {
   salesChannel?: "Amazon" | "Popup-Exclusive";
   slug: string;
   featured?: boolean;
+  amazonLink?: string;
+  characteristics?: string[];
 }
 
 export type { Product };
@@ -18,7 +20,7 @@ export type { Product };
 const products: Product[] = [
   {
     id: 1,
-    name: "Natureurade",
+    name: "Natureade",
     description: "A refreshing blend of natural flavors.",
     price: 0.0,
     imageUrl: "https://placehold.co/1000x1000?text=Natureurade",
