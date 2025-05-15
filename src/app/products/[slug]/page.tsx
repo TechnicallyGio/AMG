@@ -3,8 +3,19 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
+// Define the Product type to match your data structure
+type Product = {
+  slug: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  amazonLink: string;
+  category: string;
+  characteristics?: string[];
+};
+
 type PageProps = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 // Static path generation for product slugs
@@ -14,15 +25,17 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ProductPage({ params }: PageProps) {
+export default async function ProductPage(props: PageProps) {
+  const params = await props.params;
+  // Remove the async keyword from the component function
   const { slug } = params;
 
-  const product = products.find((p) => p.slug === slug);
+  const product = products.find((p) => p.slug === slug) as Product | undefined;
   if (!product) return notFound();
 
   const relatedProducts = products.filter(
     (p) => p.category === product.category && p.slug !== slug,
-  );
+  ) as Product[];
 
   return (
     <div className="flex flex-col items-center justify-center px-6 py-16 text-white md:px-20 lg:px-32 xl:px-48">
@@ -39,16 +52,16 @@ export default async function ProductPage({ params }: PageProps) {
               priority
             />
             <Image
-              src="https://placehold.co/1000x1000?text=Placeholder+2"
-              alt={product.name}
+              src="https://placehold.co/1000x1000?text=Placeholder-2" // Changed to local placeholder image
+              alt={`${product.name} alternate view`}
               width={400}
               height={400}
               className="h-96 w-96 object-contain"
               priority
             />
             <Image
-              src="https://placehold.co/1000x1000?text=Placeholder+3"
-              alt={product.name}
+              src="https://placehold.co/1000x1000?text=Placeholder-3" // Changed to local placeholder image
+              alt={`${product.name} additional view`}
               width={400}
               height={400}
               className="h-96 w-96 object-contain"
@@ -97,7 +110,7 @@ export default async function ProductPage({ params }: PageProps) {
             {relatedProducts.map((relatedProduct) => (
               <div
                 key={relatedProduct.slug}
-                className="w-1/5 min-w-[160px] rounded-2xl bg-white/5 p-6 text-center shadow-lg backdrop-blur transition hover:scale-105"
+                className="w-full max-w-xs rounded-2xl bg-white/5 p-6 text-center shadow-lg backdrop-blur transition hover:scale-105 sm:w-1/2 md:w-1/3 lg:w-1/4"
               >
                 <Image
                   src={relatedProduct.imageUrl}
