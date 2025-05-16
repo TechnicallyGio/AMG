@@ -122,7 +122,7 @@ export default function ProductsPage() {
               </div>
               <div className="flex flex-col space-y-2">
                 <Link
-                  href={`/products/${product.slug}`}
+                  href={`/shop/${product.slug}`}
                   className="btn btn-outline btn-sm"
                 >
                   View Details
