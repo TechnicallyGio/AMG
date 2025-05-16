@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import type { Product } from "../../products"; // You can export your Product type to reuse here
+import type { Product } from "../../products";
 
 type ProductContentProps = {
   product: Product;
@@ -16,78 +16,97 @@ export default function ProductContent({
 }: ProductContentProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.6 }}
-      className="flex flex-col items-center justify-center px-6 py-16 text-white md:px-20 lg:px-32 xl:px-45"
+      exit={{ opacity: 0, y: -40 }}
+      transition={{ duration: 0.7, ease: "easeInOut" }}
+      className="flex flex-col items-center justify-center px-6 py-20 text-white md:px-16 lg:px-32"
     >
-      <div className="flex w-full flex-col gap-8 md:flex-row">
+      <div className="flex w-full flex-col gap-12 md:flex-row">
         {/* Left - Product Images */}
         <motion.div
           className="w-full md:w-1/2"
-          initial={{ x: -50, opacity: 0 }}
+          initial={{ x: -60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
+          transition={{ delay: 0.2, duration: 0.7, ease: "easeInOut" }}
         >
-          <div className="flex flex-col items-center space-y-6">
-            <Image
-              src={product.imageUrl}
-              alt={product.name}
-              width={400}
-              height={400}
-              className="h-96 w-96 object-contain"
-              priority
-            />
-            <Image
-              src="https://placehold.co/1000x1000?text=Placeholder-2"
-              alt={`${product.name} alternate view`}
-              width={400}
-              height={400}
-              className="h-96 w-96 object-contain"
-              priority
-            />
-            <Image
-              src="https://placehold.co/1000x1000?text=Placeholder-3"
-              alt={`${product.name} additional view`}
-              width={400}
-              height={400}
-              className="h-96 w-96 object-contain"
-              priority
-            />
+          <div className="flex flex-col items-center gap-8">
+            {product.promoImageUrl?.map((img, idx) => (
+              <Image
+                key={idx}
+                src={img}
+                alt={`${product.name} promo ${idx + 1}`}
+                width={500}
+                height={500}
+                className="rounded-xl object-contain shadow-xl"
+              />
+            ))}
           </div>
         </motion.div>
 
-        {/* Right - Sticky Product Info */}
+        {/* Right - Product Info (Sticky and Centered Vertically) */}
         <motion.div
           className="w-full md:w-1/2"
-          initial={{ x: 50, opacity: 0 }}
+          initial={{ x: 60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
+          transition={{ delay: 0.3, duration: 0.7, ease: "easeInOut" }}
         >
-          <div className="sticky top-24">
-            <div className="flex flex-col items-start justify-start rounded-xl bg-black/30 p-6 shadow-lg backdrop-blur">
-              <h2 className="text-2xl font-bold">{product.name}</h2>
-              <p className="mt-4 text-gray-300">{product.description}</p>
+          <div className="sticky top-1/2 -translate-y-1/2 transform">
+            <div className="relative flex flex-col gap-6 rounded-3xl bg-white/5 p-10 shadow-xl ring-1 ring-white/10 backdrop-blur-md transition-all hover:ring-white/30">
+              <div className="flex items-center gap-6">
+                <Image
+                  src={product.imageUrl}
+                  alt={product.name}
+                  width={96}
+                  height={96}
+                  className="h-24 w-24 rounded-xl object-contain"
+                />
+                <div>
+                  <h1 className="text-4xl font-semibold tracking-tight text-white">
+                    {product.name}
+                  </h1>
+                  <p className="mt-1 text-sm text-gray-400">
+                    {product.category}
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <h2 className="text-lg font-semibold text-white">Overview</h2>
+                <p className="mt-2 text-base leading-relaxed text-gray-300">
+                  {product.description}
+                </p>
+              </div>
+
               <a
                 href={product.amazonLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 inline-block rounded-md border border-white px-4 py-2 text-white transition hover:bg-white hover:text-black"
+                className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black shadow-lg transition hover:bg-gray-100"
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M..." />
+                </svg>
                 Buy on Amazon
               </a>
 
-              <hr className="my-6 w-full border-gray-600" />
+              <hr className="my-6 border-white/20" />
 
-              <h3 className="text-lg font-semibold">Characteristics</h3>
-              <ul className="mt-4 list-disc pl-5">
-                {product.characteristics?.map((char, idx) => (
-                  <li key={idx} className="text-gray-300">
-                    {char}
-                  </li>
-                ))}
-              </ul>
+              <div>
+                <h3 className="text-md font-semibold text-white">
+                  Key Features
+                </h3>
+                <ul className="mt-3 list-disc space-y-2 pl-6 text-sm text-gray-300">
+                  {product.characteristics?.map((char, idx) => (
+                    <li key={idx}>{char}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -96,32 +115,34 @@ export default function ProductContent({
       {/* Related Products */}
       {relatedProducts.length > 0 && (
         <motion.div
-          className="mt-16 flex w-full flex-col items-center"
+          className="mt-20 w-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.9, duration: 0.6 }}
+          transition={{ delay: 0.8, duration: 0.6, ease: "easeInOut" }}
         >
-          <h2 className="mb-8 text-center text-2xl font-bold">
-            Related Products
+          <h2 className="mb-8 text-center text-3xl font-semibold tracking-tight">
+            You Might Also Like
           </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {relatedProducts.map((relatedProduct) => (
               <motion.div
                 key={relatedProduct.slug}
-                whileHover={{ scale: 1.05 }}
-                className="rounded-2xl bg-white/5 p-6 text-center shadow-lg backdrop-blur transition"
+                whileHover={{ scale: 1.03 }}
+                className="rounded-2xl bg-white/5 p-6 text-center shadow-md backdrop-blur-sm transition"
               >
                 <Image
                   src={relatedProduct.imageUrl}
                   alt={relatedProduct.name}
-                  width={96}
-                  height={96}
+                  width={100}
+                  height={100}
                   className="mx-auto mb-4 h-24 w-24 object-contain"
                 />
-                <h3 className="text-lg font-semibold">{relatedProduct.name}</h3>
+                <h3 className="text-base font-medium text-white">
+                  {relatedProduct.name}
+                </h3>
                 <Link
                   href={`/products/${relatedProduct.slug}`}
-                  className="mt-4 inline-block rounded-md border border-white px-3 py-1 text-sm transition hover:bg-white hover:text-black"
+                  className="mt-4 inline-block rounded-full border border-white px-4 py-1 text-sm transition hover:bg-white hover:text-black"
                 >
                   Learn More
                 </Link>

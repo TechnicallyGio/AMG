@@ -108,7 +108,7 @@ export default function ProductsPage() {
               whileHover="hover"
             >
               <div className="mb-4 flex flex-col items-center">
-                <div className="relative h-24 w-24 overflow-hidden rounded-full shadow-inner">
+                <div className="relative h-24 w-24 overflow-hidden shadow-inner">
                   <Image
                     src={product.imageUrl}
                     alt={product.name}
@@ -116,7 +116,7 @@ export default function ProductsPage() {
                     style={{ objectFit: "cover" }}
                   />
                 </div>
-                <h3 className="text-primary mt-3 line-clamp-2 text-xl font-semibold">
+                <h3 className="text-base-content mt-3 line-clamp-2 text-xl font-semibold">
                   {product.name}
                 </h3>
               </div>
