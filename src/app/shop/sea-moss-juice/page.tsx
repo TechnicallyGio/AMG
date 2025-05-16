@@ -6,7 +6,6 @@ import products, { type Product } from "../../products";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icon } from "@iconify/react";
 
-// Filter with explicit typing
 const juiceProducts: Product[] = products.filter(
   (p): p is Product => p.category === "beverage",
 );
@@ -49,16 +48,16 @@ export default function JuiceProductInfoPage() {
   return (
     <div className="min-h-screen justify-between text-gray-900">
       <motion.section
-        className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-7xl items-center justify-center gap-16 px-6 py-16 md:px-20"
+        className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-7xl flex-col-reverse items-center justify-center gap-12 px-4 py-12 md:flex-row md:gap-16 md:px-20 md:py-16"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
         key={product.id}
       >
-        {/* Left side: promo images slider */}
+        {/* Left side: image carousel */}
         <div
           ref={imageContainerRef}
-          className="relative w-full max-w-md md:max-w-lg"
+          className="relative w-full max-w-xs sm:max-w-sm md:max-w-lg"
           style={{ minHeight: imageContainerHeight }}
         >
           <div className="relative aspect-square overflow-hidden rounded-3xl shadow-lg">
@@ -88,35 +87,35 @@ export default function JuiceProductInfoPage() {
             <button
               onClick={handlePrev}
               aria-label="Previous product"
-              className="bg-base-200 rounded-full p-2 text-white shadow-md hover:bg-gray-300 focus:ring-2 focus:ring-gray-400 focus:outline-none"
+              className="bg-base-200 rounded-full p-2 text-white shadow-md hover:bg-gray-300 focus:ring-2 focus:ring-gray-400 focus:outline-none sm:p-3"
             >
               <Icon icon="mdi:chevron-left" />
             </button>
             <button
               onClick={handleNext}
               aria-label="Next product"
-              className="bg-base-200 rounded-full p-2 text-white shadow-md hover:bg-gray-300 focus:ring-2 focus:ring-gray-400 focus:outline-none"
+              className="bg-base-200 rounded-full p-2 text-white shadow-md hover:bg-gray-300 focus:ring-2 focus:ring-gray-400 focus:outline-none sm:p-3"
             >
               <Icon icon="mdi:chevron-right" />
             </button>
           </div>
         </div>
 
-        {/* Right side: details */}
+        {/* Right side: product info */}
         <motion.div
-          className="sticky top-20 max-w-xl min-w-1/2 space-y-8"
+          className="w-full max-w-xl space-y-8 md:sticky md:top-20"
           variants={itemVariants}
-          style={{ minHeight: imageContainerHeight }} // <-- dynamically matching left side height
+          style={{ minHeight: imageContainerHeight }}
         >
-          <h2 className="tracking-tigh text-5xl font-extrabold">
+          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
             {product.name}
           </h2>
-          <p className="text-xl leading-relaxed text-gray-700">
+          <p className="text-base leading-relaxed text-gray-700 sm:text-lg md:text-xl">
             {product.description}
           </p>
 
           {product.characteristics && (
-            <ul className="list-inside list-disc space-y-3 text-lg text-gray-600">
+            <ul className="list-inside list-disc space-y-3 text-base text-gray-600 sm:text-lg">
               {product.characteristics.map((char, idx) => (
                 <li key={idx}>{char}</li>
               ))}
@@ -125,11 +124,11 @@ export default function JuiceProductInfoPage() {
 
           <button
             disabled={product.price === 0}
-            className={`w-full rounded-xl py-5 text-xl font-semibold transition focus:ring-2 focus:ring-black focus:outline-none ${
+            className={`w-full rounded-xl px-6 py-4 text-base font-semibold transition focus:ring-2 focus:ring-black focus:outline-none md:text-xl ${
               product.price === 0
                 ? "cursor-not-allowed bg-gray-300 text-gray-600"
                 : "bg-black text-white hover:bg-gray-900"
-            } `}
+            }`}
           >
             {product.price === 0
               ? "Coming Soon"
