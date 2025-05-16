@@ -20,7 +20,7 @@ export default function ProductContent({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -40 }}
       transition={{ duration: 0.7, ease: "easeInOut" }}
-      className="flex flex-col items-center justify-center px-6 py-20 text-white md:px-16 lg:px-32"
+      className="flex flex-col items-center justify-center px-4 py-10 text-white sm:px-6 md:px-16 lg:px-32"
     >
       <div className="flex w-full flex-col gap-12 md:flex-row">
         {/* Left - Product Images */}
@@ -30,30 +30,30 @@ export default function ProductContent({
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.7, ease: "easeInOut" }}
         >
-          <div className="flex flex-col items-center gap-8">
+          <div className="flex flex-col items-center gap-6">
             {product.promoImageUrl?.map((img, idx) => (
               <Image
                 key={idx}
                 src={img}
                 alt={`${product.name} promo ${idx + 1}`}
-                width={500}
-                height={500}
-                className="rounded-xl object-contain shadow-xl"
+                width={400}
+                height={400}
+                className="w-full max-w-sm rounded-xl object-contain shadow-xl"
               />
             ))}
           </div>
         </motion.div>
 
-        {/* Right - Product Info (Sticky and Centered Vertically) */}
+        {/* Right - Product Info */}
         <motion.div
           className="w-full md:w-1/2"
           initial={{ x: 60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.7, ease: "easeInOut" }}
         >
-          <div className="sticky top-1/2 -translate-y-1/2 transform">
-            <div className="relative flex flex-col gap-6 rounded-3xl bg-white/5 p-10 shadow-xl ring-1 ring-white/10 backdrop-blur-md transition-all hover:ring-white/30">
-              <div className="flex items-center gap-6">
+          <div className="relative md:sticky md:top-1/2 md:-translate-y-1/2 md:transform">
+            <div className="flex flex-col gap-6 rounded-3xl bg-white/5 p-6 shadow-xl ring-1 ring-white/10 backdrop-blur-md transition-all hover:ring-white/30 sm:p-8">
+              <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
                 <Image
                   src={product.imageUrl}
                   alt={product.name}
@@ -61,8 +61,8 @@ export default function ProductContent({
                   height={96}
                   className="h-24 w-24 rounded-xl object-contain"
                 />
-                <div>
-                  <h1 className="text-4xl font-semibold tracking-tight text-white">
+                <div className="text-center sm:text-left">
+                  <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
                     {product.name}
                   </h1>
                   <p className="mt-1 text-sm text-gray-400">
@@ -115,15 +115,15 @@ export default function ProductContent({
       {/* Related Products */}
       {relatedProducts.length > 0 && (
         <motion.div
-          className="mt-20 w-full"
+          className="mt-16 w-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.6, ease: "easeInOut" }}
         >
-          <h2 className="mb-8 text-center text-3xl font-semibold tracking-tight">
+          <h2 className="mb-8 text-center text-2xl font-semibold tracking-tight sm:text-3xl">
             You Might Also Like
           </h2>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {relatedProducts.map((relatedProduct) => (
               <motion.div
                 key={relatedProduct.slug}
