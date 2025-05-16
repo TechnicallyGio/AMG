@@ -25,7 +25,7 @@ export default function RootLayout({
   const headerLinks = [
     { name: "Home", url: "/" },
     { name: "About", url: "/about" },
-    { name: "Shop", url: "/products" },
+    { name: "Shop", url: "/shop" },
     { name: "Contact", url: "/contact" },
   ];
 

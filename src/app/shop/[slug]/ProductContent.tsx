@@ -141,7 +141,7 @@ export default function ProductContent({
                   {relatedProduct.name}
                 </h3>
                 <Link
-                  href={`/products/${relatedProduct.slug}`}
+                  href={`/shop/${relatedProduct.slug}`}
                   className="mt-4 inline-block rounded-full border border-white px-4 py-1 text-sm transition hover:bg-white hover:text-black"
                 >
                   Learn More

@@ -10,7 +10,10 @@ export default function Home() {
 
   return (
     <>
-      <header className="relative top-0 flex min-h-screen flex-col-reverse items-center justify-center gap-12 overflow-hidden px-6 py-16 md:flex-row md:px-20 lg:px-32 xl:px-48">
+      <header className="relative top-0 isolate flex min-h-screen flex-col-reverse items-center justify-center gap-12 overflow-hidden px-6 py-16 md:flex-row md:px-20 lg:px-32 xl:px-48">
+        {/* Background layer for mascot */}
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[url('/images/branding/logo/mascot.png')] bg-contain bg-center bg-no-repeat opacity-10" />
+
         <div className="text-center md:w-1/2 md:text-left">
           <h1 className="mb-6 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
             Discover the Power of Sea Moss
@@ -23,7 +26,7 @@ export default function Home() {
           <button className="btn-outline btn-lg btn">
             <Link href="/products">Shop Now</Link>
           </button>
-        </div>{" "}
+        </div>
       </header>
       <section className="px-6 py-16 text-white md:px-20 lg:px-32 xl:px-48">
         <h2 className="mb-12 text-center text-3xl font-bold sm:text-4xl">
@@ -46,7 +49,7 @@ export default function Home() {
               <h3 className="text-lg font-semibold">{product.name}</h3>
 
               <Link
-                href={`/products/${product.slug}`}
+                href={`/shop/${product.slug}`}
                 className="btn btn-outline mt-3"
               >
                 <span>Learn More</span>
