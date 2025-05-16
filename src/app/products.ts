@@ -21,14 +21,14 @@ export type { Product };
 const products: Product[] = [
   {
     id: 1,
-    name: "Nature's Gatorade",
+    name: "Natureade",
     description: "A refreshing blend of natural flavors.",
     price: 0.0,
-    imageUrl: "/images/branding/flavors/natures-gatorade.png",
+    imageUrl: "/images/branding/flavors/naturade.png",
     category: "beverage",
     lowSugarVariant: true,
     salesChannel: "Amazon",
-    slug: "natureurade",
+    slug: "Natureade",
     featured: true,
     promoImageUrl: [
       "https://placehold.co/1000x1000?text=Nature's+Gatorade+Promo+1",
