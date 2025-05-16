@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { comicStrip } from "../../fonts/fonts"; // or relative path if no alias
 
 interface NavigationProps {
   links: Array<{
@@ -139,7 +140,8 @@ export default function Navigation({ links }: NavigationProps) {
         initial={{ scale: 0.95 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.3 }}
-        className="flex-none"
+        className={`flex-none ${comicStrip.variable}`}
+        style={{ fontFamily: "var(--font-comicstrip)" }}
       >
         <Link href="/" className="text-xl font-bold text-white md:text-3xl">
           AMIRACLE&apos;CO.
